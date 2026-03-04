@@ -1,19 +1,70 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="pt-br">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>SBC Soft</title>
-</head
+
+    <!-- ESSENCIAL para celular -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        img {
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .cabecalho {
+            width: 40%;
+        }
+
+        .logo {
+            width: 60%;
+        }
+
+        .icone {
+            width: 20%;
+            max-width: 120px;
+        }
+
+        /* 📱 Ajustes para celular */
+        @media (max-width: 768px) {
+            .cabecalho {
+                width: 80%;
+            }
+
+            .logo {
+                width: 90%;
+            }
+
+            .icone {
+                width: 30%;
+            }
+        }
+    </style>
+</head>
+
 <body>
-<center>
-<img src='sbc.jpg'><p>
 
-<a href="https://api.whatsapp.com/send?phone=5511981818280">WhatsApp: (11) 98181-8280</a><p>
- <a href="mailto:edson.emerich@gmail.com">E-mail: edson.emerich@gmail.com</a><p>
-Nossos clientes não tem problemas em sua informatização...<p>
-...eles tem solucoes!<p>
+   
 
-</center>
+    <img src="sbc.jpg" class="logo">
+
+    <div>
+        <a href="https://api.whatsapp.com/send?phone=5511981818280">
+            <img src="wha.jpg" class="icone">
+        </a>
+
+        <a href="mailto:contato@sbcsoft.com.br">
+            <img src="ema.jpg" class="icone">
+        </a>
+    </div>
+ <img src="cab.jpg" class="cabecalho">
 </body>
 </html>
