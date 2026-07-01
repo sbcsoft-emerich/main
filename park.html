@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envio de Eventos - BPark</title>
+    <title>Envio de Placas - BPark</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -211,13 +211,28 @@
         const mensagemWhats = encodeURIComponent("Ola, aqui é do estacionamento da BURN, por favor compareça ao local de estacionamento de seu veículo");
 
         try {
-            const response = await fetch('http://infog2.ddns.net:1003/eventos/bpark', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            });
+  //          const response = await fetch('http://infog2.ddns.net:1003/eventos/bpark', {
+  //              method: 'POST',
+  //              headers: {
+  //                  'Content-Type': 'application/json'
+  //              },
+  //              body: JSON.stringify(dados)
+  //          });
+
+
+// Substitua o bloco do fetch por este:
+const response = await fetch('http://infog2.ddns.net:1003/eventos/bpark', {
+    method: 'POST',
+    mode: 'cors', // Adicionado explicitamente para compatibilidade com iOS/Safari
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify(dados)
+});
+
+
+
 
             // Altera o texto do título incluindo dinamicamente a placa informada
             tituloResposta.textContent = `CONTATOS CADASTRADOS PARA A PLACA: ${placa}`;
