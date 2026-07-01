@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Veículo2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 13px;
+            margin: 5px 0 0 0;
+        }
+        .bloco-info {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .envio {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+        .sucesso {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .erro {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cadastro ParkCad</h2>
+    
+    <form id="formCadastro">
+        <div class="form-group">
+            <label for="placa">PLACA</label>
+            <input type="text" id="placa" placeholder="ABC1D23" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label for="nome">NOME</label>
+            <input type="text" id="nome" placeholder="Nome do motorista" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label for="fone">FONE</label>
+            <input type="tel" id="fone" placeholder="(00) 00000-0000" required autocomplete="off">
+        </div>
+        
+        <button type="submit" id="btnEnviar">ENVIAR</button>
+    </form>
+
+    <div id="blocoEnvio" class="bloco-info envio">
+        <strong>JSON Enviado:</strong>
+        <pre id="jsonEnviado"></pre>
+    </div>
+
+    <div id="blocoResultado" class="bloco-info"></div>
+</div>
+
+<script>
+    document.getElementById('formCadastro').addEventListener('submit', async function(event) {
+        // Impede o recarregamento da página
+        event.preventDefault();
+
+        // Elementos da tela
+        const placaInput = document.getElementById('placa');
+        const nomeInput = document.getElementById('nome');
+        const foneInput = document.getElementById('fone');
+        const botao = document.getElementById('btnEnviar');
+        const blocoEnvio = document.getElementById('blocoEnvio');
+        const jsonEnviadoPre = document.getElementById('jsonEnviado');
+        const blocoResultado = document.getElementById('blocoResultado');
+
+        // 1. Monta o objeto com os dados digitados
+        const dados = {
+            placa: placaInput.value,
+            nome: nomeInput.value,
+            fone: foneInput.value
+        };
+
+        // 2. Demonstra o JSON enviado na tela (formatado com recuo de 2 espaços)
+        jsonEnviadoPre.textContent = JSON.stringify(dados, null, 2);
+        blocoEnvio.style.display = 'block';
+
+        // Configuração inicial do envio
+        botao.disabled = true;
+        botao.innerText = 'Enviando...';
+        blocoResultado.style.display = 'none';
+
+        try {
+            // 3. Faz o POST para a nova rota local
+            const response = await fetch('http://infog2.ddns.net:1003/eventos/bpark', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            // Tenta processar o retorno do servidor
+            let textoRetorno = '';
+            try {
+                const jsonRetorno = await response.json();
+                textoRetorno = JSON.stringify(jsonRetorno, null, 2);
+            } catch {
+                textoRetorno = await response.text();
+            }
+
+            if (response.ok) {
+                // Sucesso (Status 2xx)
+                blocoResultado.className = 'bloco-info sucesso';
+                blocoResultado.innerHTML = `<strong>Resposta do Servidor:</strong>
