@@ -158,7 +158,7 @@
 <body>
 
 <div class="container">
-    <h2>Registro de Evento</h2>
+    <h2>Registro da placa</h2>
     
     <form id="formBpark">
         <div class="form-group">
@@ -221,12 +221,13 @@
 
 
 // Substitua o bloco do fetch por este:
-const response = await fetch('http://infog2.ddns.net:1003/eventos/bpark', {
+const response = await fetch('https://api.associacaoclube.com.br:2023/eventos/bpark', {
     method: 'POST',
     mode: 'cors', // Adicionado explicitamente para compatibilidade com iOS/Safari
     headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+		'Authorization': 'Basic ' + btoa('horse:12qwaszx')
     },
     body: JSON.stringify(dados)
 });
