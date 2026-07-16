@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envio de Placas - BPark</title>
+    <title>Consulta de Placas - BPark</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -158,12 +158,12 @@
 <body>
 
 <div class="container">
-    <h2>Registro da placa</h2>
+    <h2>Consulta da placa</h2>
     
     <form id="formBpark">
         <div class="form-group">
             <label for="placa">PLACA</label>
-            <input type="text" id="placa" placeholder="Ex: ABC1D23" required>
+            <input type="text" id="placa" placeholder="Ex: ABC1D23" required style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase()">
         </div>
         
        
